@@ -4,37 +4,37 @@
 Use scripts for preparing asset for import to Unreal Engine
 
 ## Functions of Project
-2delete_suffix_prefix:
-# delete_object_prefix() - Delete selected object name prefix.
-# delete_object_suffix() - Delete selected object name suffix.
+### 2delete_suffix_prefix:
+### delete_object_prefix() - Delete selected object name prefix.
+### delete_object_suffix() - Delete selected object name suffix.
 
-3resave_textures:
-# pack_all_images ()		- Packs all images in data.
-# unpack_all_images()		- Unpacks all images in data.
-# resave_textures()		- Resaves textures with conventional names. Base name depends on material name
-# setup_node_color_space() - Corrects color space for node. 
+### 3resave_textures:
+### pack_all_images ()		- Packs all images in data.
+###  unpack_all_images()		- Unpacks all images in data.
+###  resave_textures()		- Resaves textures with conventional names. Base name depends on material name
+###  setup_node_color_space() - Corrects color space for node. 
 
-admin_tasks:
-# rename_to_named_list() - Rename objects to standard: base_name + separator + index. 
+### admin_tasks:
+###  rename_to_named_list() - Rename objects to standard: base_name + separator + index. 
 
-backface_culling:
-# set_backface_culling() - Set backface_culling value to materials of selected objects.
+### backface_culling:
+###  set_backface_culling() - Set backface_culling value to materials of selected objects.
 
-create_lods:
-# create_lods() - Create ready for export to Unreal Engine Lods from Model Main Function
+### create_lods:
+###  create_lods() - Create ready for export to Unreal Engine Lods from Model Main Function
 
-inline:
-# relocate_to_interval() - Move multiple objects by rows and columns in form of table or line. 
+### inline:
+###  relocate_to_interval() - Move multiple objects by rows and columns in form of table or line. 
 
-set_material_prefix:
-# capitalize_all_material_names() - Make first char in name of material upper case to all materials in data. 
-# set_prefix_to_all_materials()	- Add M_ prefix to all materials in data. 
+### set_material_prefix:
+###  capitalize_all_material_names() - Make first char in name of material upper case to all materials in data. 
+###  set_prefix_to_all_materials()	- Add M_ prefix to all materials in data. 
 
-standardize_names:
-# standardize_selected_names() - Capitalize, upper_camel_case, delete_space in names of selected objects. 
+### standardize_names:
+###  standardize_selected_names() - Capitalize, upper_camel_case, delete_space in names of selected objects. 
 
-to_floor:
-# to_floor_plane_selected() - Move all selected objects to xy floor plane. 
+### to_floor:
+###  to_floor_plane_selected() - Move all selected objects to xy floor plane. 
 
 ## Support
 Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
