@@ -40,6 +40,7 @@ AXIS_INDEX_PLACEMENT = 1
 #def GetGlobalCoordinates(world_mtx, ):
     #return
 
+## Move multiple objects by rows and columns in form of table or line
 def relocate_to_interval(axis_index, start_point, rows_count, horizontal_indent, vertical_indent, is_square):
     print('Script starts')
     selected_objects = bpy.context.selected_objects

@@ -40,6 +40,7 @@ def correct_suffix(suffix):
     else:
         return suffix
 
+## Packs all images in data
 def pack_all_images():
     for image in bpy.data.images:
         try:
@@ -47,6 +48,7 @@ def pack_all_images():
         except:
             print(pack_all_images.__name__+ '(): ' + image.name + ' did not packed')
 
+## Unpacks all images in data
 def unpack_all_images():
     for image in bpy.data.images:
         try:
@@ -54,7 +56,7 @@ def unpack_all_images():
         except:
             print(unpack_all_images.__name__+ '(): ' + image.name + ' did not unpacked')
 
-# Corrects color space for node
+## Corrects color space for node
 def setup_node_color_space(node, suffix):
     if suffix == '_Diff':
         node.image.colorspace_settings.name = 'sRGB'
@@ -65,7 +67,7 @@ def setup_node_color_space(node, suffix):
     elif suffix == '_Emissive':
         node.image.colorspace_settings.name = 'sRGB'
 
-
+## Resaves textures with conventional names. Base name depends on material name
 def resave_textures():
     for material in bpy.data.materials:
         textures_name_with_prefix = 'T_' + material.name.removeprefix('M_')

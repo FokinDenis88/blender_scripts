@@ -21,11 +21,13 @@ def set_prefix_to_all_materials():
 #set_prefix_to_selected_materials()
 #set_prefix_to_all_materials()
 
+## Delete selected object name suffix
 def delete_object_suffix(suffix):
     for object in bpy.context.selected_objects:
         if object.name.endswith(suffix):
             object.name = object.name.removesuffix(suffix)
 
+## Delete selected object name prefix
 def delete_object_prefix(prefix):
     for object in bpy.context.selected_objects:
         if object.name.startswith(prefix):

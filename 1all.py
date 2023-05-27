@@ -6,6 +6,8 @@ sys.path.append(os.path.abspath(PARENT_DIR))'''
 
 sys.path.append(r'C:\Development\Projects\IT\Programming\!it-projects\!best-projects')
 
+## Setting backface_culling and M_ prefix to material on all selected objects
+
 import blender_scripts.backface_culling as backface_culling
 import blender_scripts.set_material_prefix as set_material_prefix
 #import blender_scripts.standardize_names as standardize_names

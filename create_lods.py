@@ -125,7 +125,7 @@ def get_empty_lod_group(lod_zero):
     return empty_lod_group
 
 
-# Create ready for export to Unreal Engine Lods from Model
+## Create ready for export to Unreal Engine Lods from Model
 # Main Function
 def create_lods(lods_count_p, decimate_modifier_name):
     print('Script started.')

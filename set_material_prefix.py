@@ -13,10 +13,12 @@ def set_prefix_to_selected_materials():
         for material_slot in object.material_slots:
             add_material_prefix_to_name(material_slot.material)
 
+## Add M_ prefix to all materials in data
 def set_prefix_to_all_materials():
     for material in bpy.data.materials:
         add_material_prefix_to_name(material)
 
+## Make first char in name of material upper case to all materials in data
 def capitalize_all_material_names():
     for material in bpy.data.materials:
         material.name = material.name.capitalize()

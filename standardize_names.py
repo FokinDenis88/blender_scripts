@@ -37,6 +37,7 @@ def delete_space_or_underscore(text_object):
     else:
         return ''
 
+## Capitalize, upper_camel_case, delete_space in names of selected objects
 def standardize_selected_names(to_delete_space = True):
     for object in bpy.context.selected_objects:
         standard_name = object.name.capitalize()

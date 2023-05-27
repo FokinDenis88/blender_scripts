@@ -8,6 +8,7 @@ BASE_OBJECTS_NAME = 'Mesh'
 
 SEPARATOR = '_'
 
+## Rename objects to standard: base_name + separator + index
 def rename_to_named_list(base_name):
     i = 1
     for object in bpy.context.selected_objects:
