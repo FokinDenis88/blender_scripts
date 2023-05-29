@@ -1,6 +1,4 @@
-# blender_scripts
-
-## Description
+# Blender Scripts for Game Development Unreal Engine
 Use scripts for preparing asset for import to Unreal Engine
 
 ## Functions of Project
