@@ -23,10 +23,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\blender\base\__init__.py" />
+    <Compile Include="src\blender\external_data.py" />
+    <Compile Include="src\blender\path_blender.py" />
+    <Compile Include="src\blender\set_object.py" />
     <Compile Include="src\blender\__init__.py" />
     <Compile Include="src\blender\base\image.py" />
     <Compile Include="src\blender\get_object.py" />
+    <Compile Include="src\python\path_ext.py" />
     <Compile Include="src\python\__init__.py" />
+    <Compile Include="src\unreal\gltf_occlusion_node.py" />
     <Compile Include="src\unreal\lod.py" />
     <Compile Include="src\blender\base\mesh.py" />
     <Compile Include="src\blender\base\modifier.py" />
@@ -41,15 +46,17 @@
     <Compile Include="tasks\1all.py" />
     <Compile Include="tasks\2delete_suffix_prefix.py" />
     <Compile Include="tasks\3resave_textures.py" />
+    <Compile Include="tasks\add_gltf_occlusion_node.py" />
     <Compile Include="tasks\rename_to_named_list.py" />
     <Compile Include="tasks\backface_culling.py" />
     <Compile Include="src\config.py" />
     <Compile Include="tasks\create_lods.py" />
-    <Compile Include="src\downscale_material.py" />
+    <Compile Include="src\blender\scale_material.py" />
     <Compile Include="src\general.py" />
     <Compile Include="tasks\export_to_unreal.py" />
     <Compile Include="tasks\inline.py" />
     <Compile Include="src\blender\base\material.py" />
+    <Compile Include="tasks\scale_material_task.py" />
     <Compile Include="tasks\set_material_prefix.py" />
     <Compile Include="src\blender\base\shader_node.py" />
     <Compile Include="src\__init__.py" />

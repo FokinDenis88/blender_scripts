@@ -15,7 +15,7 @@ importlib.reload(get_object)
 
 
 SEPARATOR = '_'
-BASE_OBJECTS_NAME = 'Mesh'
+BASE_OBJECTS_NAME = 'Object'
 ERROR_MODEL_EMPTY_NAME = 'Error: Model must has name'
 
 

@@ -16,3 +16,13 @@ def get_suffix(text):
         return match_object[0]
     else:
         return ''
+
+def add_prefix(text, prefix):
+    if not text.startswith(prefix):
+        text = prefix + text
+    return text
+
+def add_suffix(text, suffix):
+    if not text.endswith(suffix):
+        text = text + suffix
+    return text

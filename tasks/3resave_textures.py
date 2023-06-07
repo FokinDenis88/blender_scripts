@@ -12,4 +12,4 @@ importlib.reload(texture)
 
 #unpack_all_images()
 #pack_all_images()
-texture.resave_textures()
+texture.resave_textures(True)
