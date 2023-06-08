@@ -31,7 +31,7 @@
     <Compile Include="src\blender\get_object.py" />
     <Compile Include="src\python\path_ext.py" />
     <Compile Include="src\python\__init__.py" />
-    <Compile Include="src\unreal\gltf_occlusion_node.py" />
+    <Compile Include="src\blender\gltf_occlusion_node.py" />
     <Compile Include="src\unreal\lod.py" />
     <Compile Include="src\blender\base\mesh.py" />
     <Compile Include="src\blender\base\modifier.py" />

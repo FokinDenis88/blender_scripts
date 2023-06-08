@@ -312,16 +312,51 @@ def load_shader_node_tex_image_same_settings(node, new_texture_path):
 def load_shader_node_tex_image_same_settings_i(node, image):
     load_shader_node_tex_image_same_settings(node, os.path.abspath(image.filepath))
 
+## Add node to nodes (Nodes bpy_prop_collection of Node)
+# @param node_tree material.node_tree.nodes
+# @param node_type (string) not bpy.types!!! Type of node to add (Warning: should be same as node.bl_idname)
+def new_shader_node_in_tree(node_tree, node_type, name = ''):
+    new_node = None
+    if node_tree is not None and node_type is not None:
+        new_node = node_tree.nodes.new(node_type)
+        if general.is_not_none_or_empty(name):
+            new_node.name = name
+    else:
+        print(new_shader_node_in_tree.__name__ + '() Info: material doesnt use nodes')
+    return new_node
 
-## nodes (Nodes bpy_prop_collection of Node) material.node_tree.nodes
-# Type of node to add (Warning: should be same as node.bl_idname
-def new_shader_node_in_material(material, node_type):
+## Add node to nodes (Nodes bpy_prop_collection of Node) material.node_tree.nodes
+# @param node_type (string) not bpy.types!!! Type of node to add (Warning: should be same as node.bl_idname)
+def new_shader_node_in_material(material, node_type, name = '', location = None):
     new_node = None
     if material is not None and node_type is not None:
         if use_shader_nodes(material):
             new_node = material.node_tree.nodes.new(node_type)
+            if general.is_not_none_or_empty(name):
+                new_node.name = name
         else:
             print(new_shader_node_in_material.__name__ + '() Info: material doesnt use nodes')
     else:
         print(new_shader_node_in_material.__name__ + '() Error: material, node_type must not be None')
     return new_node
+
+## Creates new node group in material
+# @param nodes_inside_group nodes, that must be placed inside of group between nodes group input, output
+def new_shader_node_group(material, nodes_inside_group = None, location = None):
+    node_group = None
+    if material is not None:
+        node_group = new_shader_node_in_material(material, 'ShaderNodeGroup')
+        node_tree_group = node_group.node_tree
+        if node_tree_group is not None:
+            #node_tree_group.inputs.clear()
+            #node_tree_group.outputs.clear()
+
+            # TODO: add target nodes_inside_group to group and link them
+            if nodes_inside_group is not None:
+                for node in nodes_inside_group:
+                    a = 0
+        else:
+            print(new_shader_node_group.__name__ + '() Info: node_group.node_tree must not be None')
+    else:
+        print(new_shader_node_group.__name__ + '() Error: material must not be None')
+    return node_group
