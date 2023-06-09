@@ -16,25 +16,25 @@ importlib.reload(transform)
 
 
 #====================================Ini Section================================
-ROWS_COUNT = 1
-#kColumnCount = 0
+ROWS_COUNT = 5
 
 # Horizontal additional interval between columns. SizeOfMaxObject + Indent. In meters.
-HORIZONTAL_INDENT = 12
+HORIZONTAL_INDENT = 0.0
 # Vertical additional interval between rows. SizeOfMaxObject + Indent. In meters.
-VERTICAL_INDENT = 10
+VERTICAL_INDENT = 0.0
 
 # The Point, from which all object will be relocated
 START_POINT = mathutils.Vector(( 0.0, 0.0, 0.0 ))
 
+IS_HORIZONTAL_PLANE = False
+
 # Models will form Square after replacement
-IS_SQUARE = False
+IS_SQUARE = True
 
+USE_MINIMAL_INDENT = True
 
-# Choose axis along which models will be placed
-# 0 = x; 1 = y; 2 = z
-AXIS_INDEX_PLACEMENT = 1
 #===============================================================================
 
 
-transform.translate_to_interval(AXIS_INDEX_PLACEMENT, START_POINT, ROWS_COUNT, HORIZONTAL_INDENT, VERTICAL_INDENT, IS_SQUARE)
+transform.translate_to_interval_selected(START_POINT, ROWS_COUNT, HORIZONTAL_INDENT, VERTICAL_INDENT,
+                                         IS_HORIZONTAL_PLANE, IS_SQUARE, USE_MINIMAL_INDENT)

@@ -47,6 +47,7 @@
     <Compile Include="tasks\2delete_suffix_prefix.py" />
     <Compile Include="tasks\3resave_textures.py" />
     <Compile Include="tasks\add_gltf_occlusion_node.py" />
+    <Compile Include="tasks\rename_material_by_object_names_task.py" />
     <Compile Include="tasks\rename_to_named_list.py" />
     <Compile Include="tasks\backface_culling.py" />
     <Compile Include="src\config.py" />

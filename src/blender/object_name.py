@@ -1,3 +1,4 @@
+from ast import If
 import os
 import sys
 BLENDER_SCRIPTS_DIR_PATH = r'C:\Development\Projects\IT\Programming\!git-web\public\blender_scripts'
@@ -114,3 +115,16 @@ def capitalize_all_material_names():
 def capitalize_all_meshes_names():
     for mesh in bpy.data.meshes:
         mesh.name = mesh.name.capitalize()
+
+def rename_material_by_object_names(objects):
+    if general.is_not_none_or_empty(objects):
+        for object in objects:
+            if object.material_slots is not None:
+                if len(object.material_slots) == 1:
+                    object.material_slots[0].material.name = object.name
+    else:
+        print(rename_material_by_object_names.__name__ + '(): objects must not be None or Empty')
+
+def rename_material_by_object_names_selected():
+    selected_objects = get_object.get_selected_objects()
+    rename_material_by_object_names(selected_objects)

@@ -157,7 +157,7 @@ def change_texture_basename_in_fullname(material, texture_node, old_texture_full
     return new_texture_fullname_n_extension
 
 ## Resaves textures with conventional names. Base name depends on material name
-def resave_textures(is_gltf_suffix = True):
+def resave_all_textures(is_gltf_suffix = True):
     image.unpack_all_images()
     for material in bpy.data.materials:
         new_texture_basename = material.name.removeprefix('M_')

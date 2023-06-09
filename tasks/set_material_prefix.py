@@ -15,5 +15,5 @@ importlib.reload(prefix_suffix_unreal)
 
 
 #set_prefix_to_selected_materials()
-object_name.capitalize_all_material_names()
+#object_name.capitalize_all_material_names()
 prefix_suffix_unreal.add_material_prefix_to_all()

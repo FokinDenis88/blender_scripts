@@ -7,12 +7,12 @@ sys.path.append(os.path.abspath(PARENT_DIR))
 import bpy
 
 import blender_scripts.src.general as general
-#import blender_scripts.src.blender.get_object as get_object
+import blender_scripts.src.blender.get_object as get_object
 import blender_scripts.src.blender.base.shader_node as shader_node
 
 import importlib
 importlib.reload(general)
-#importlib.reload(get_object)
+importlib.reload(get_object)
 importlib.reload(shader_node)
 
 
@@ -47,6 +47,9 @@ def add_occlusion_gltf_Settings_group_in_materials(materials):
 def add_occlusion_gltf_Settings_group_in_material(material):
     return add_occlusion_gltf_Settings_group_in_materials([material])[0]
 
+def add_occlusion_gltf_Settings_group_in_materials_selected():
+    selected_materials = get_object.get_selected_materials()
+    add_occlusion_gltf_Settings_group_in_materials(selected_materials)
 
 '''
 https://blender.stackexchange.com/questions/5387/how-to-handle-creating-a-node-group-in-a-script
