@@ -22,6 +22,7 @@ importlib.reload(image)
 importlib.reload(shader_node)
 
 ## Get texture suffix from linked bsdf principled node socket
+# Use, when you find to what socket texture node is connected
 def get_texture_suffix_from_socket_name(socket_name):
     if general.is_not_none_or_empty(socket_name):
         if socket_name == 'Base Color':

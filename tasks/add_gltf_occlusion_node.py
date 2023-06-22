@@ -12,4 +12,4 @@ importlib.reload(get_object)
 importlib.reload(gltf_occlusion_node)
 
 
-gltf_occlusion_node.add_occlusion_gltf_Settings_group_in_materials_selected(materials)
+gltf_occlusion_node.add_occlusion_gltf_Settings_group_in_materials_selected()

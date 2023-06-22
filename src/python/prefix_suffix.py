@@ -4,6 +4,7 @@ PREFIX_REGEX = '^[^_]+_'
 SUFFIX_REGEX = '_[^_]+\\Z'
 
 def get_prefix(text):
+
     match_object = re.search(PREFIX_REGEX, text)
     if match_object is not None:
         return match_object[0]
