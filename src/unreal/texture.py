@@ -8,7 +8,7 @@ import bpy
 
 import blender_scripts.src.general as general
 import blender_scripts.src.blender.get_object as get_object
-import blender_scripts.src.python.prefix_suffix as prefix_suffix
+import blender_scripts.external.python_library.src.prefix_suffix as prefix_suffix
 import blender_scripts.src.unreal.prefix_suffix_unreal as prefix_suffix_unreal
 import blender_scripts.src.blender.base.image as image
 import blender_scripts.src.blender.base.shader_node as shader_node

@@ -11,10 +11,12 @@ import re
 
 import blender_scripts.src.general as general
 import blender_scripts.src.blender.get_object as get_object
+import blender_scripts.external.python_library.src.prefix_suffix as prefix_suffix
 
 import importlib
 importlib.reload(general)
 importlib.reload(get_object)
+importlib.reload(prefix_suffix)
 
 
 PREFIX_SUFFIX_SEPARATOR = '_'
@@ -70,19 +72,7 @@ def correct_suffix(suffix):
 
 
 
-def get_prefix(text):
-    match_object = re.search(PREFIX_REGEX, text)
-    if match_object is not None:
-        return match_object[0]
-    else:
-        return ''
 
-def get_suffix(text):
-    match_object = re.search(SUFFIX_REGEX, text)
-    if match_object is not None:
-        return match_object[0]
-    else:
-        return ''
 
 '''## @return (str) name of asset without prefix and suffix, without extension.
 def get_asset_name_without_prefix_suffix(object_path):

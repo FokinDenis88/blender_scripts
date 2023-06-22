@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(PARENT_DIR))
 import bpy
 
 #import blender_scripts.src.general as general
-import blender_scripts.src.python.path_ext as path_ext
+import blender_scripts.external.python_library.src.path_ext as path_ext
 
 import importlib
 #importlib.reload(general)

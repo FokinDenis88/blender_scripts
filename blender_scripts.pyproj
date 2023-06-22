@@ -22,6 +22,14 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="external\python_library\src\file.py" />
+    <Compile Include="external\python_library\src\general.py" />
+    <Compile Include="external\python_library\src\ini.py" />
+    <Compile Include="external\python_library\src\path_ext.py" />
+    <Compile Include="external\python_library\src\prefix_suffix.py" />
+    <Compile Include="external\python_library\src\__init__.py" />
+    <Compile Include="external\python_library\__init__.py" />
+    <Compile Include="external\__init__.py" />
     <Compile Include="src\blender\base\__init__.py" />
     <Compile Include="src\blender\external_data.py" />
     <Compile Include="src\blender\path_blender.py" />
@@ -29,14 +37,11 @@
     <Compile Include="src\blender\__init__.py" />
     <Compile Include="src\blender\base\image.py" />
     <Compile Include="src\blender\get_object.py" />
-    <Compile Include="src\python\path_ext.py" />
-    <Compile Include="src\python\__init__.py" />
     <Compile Include="src\blender\gltf_occlusion_node.py" />
     <Compile Include="src\unreal\lod.py" />
     <Compile Include="src\blender\base\mesh.py" />
     <Compile Include="src\blender\base\modifier.py" />
     <Compile Include="src\blender\object_name.py" />
-    <Compile Include="src\python\prefix_suffix.py" />
     <Compile Include="src\blender\select.py" />
     <Compile Include="src\unreal\prefix_suffix_unreal.py" />
     <Compile Include="src\unreal\texture.py" />
@@ -67,9 +72,11 @@
     <Compile Include="__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="external\" />
+    <Folder Include="external\python_library\" />
+    <Folder Include="external\python_library\src\" />
     <Folder Include="src\blender\" />
     <Folder Include="src\blender\base\" />
-    <Folder Include="src\python\" />
     <Folder Include="src\unreal\" />
     <Folder Include="tasks\" />
     <Folder Include="src\" />

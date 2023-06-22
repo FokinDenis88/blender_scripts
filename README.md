@@ -1,6 +1,9 @@
 # Blender Scripts for Game Development Unreal Engine
 Use scripts for preparing asset for import to Unreal Engine
 
+## Installation
+git clone --recurse-submodules https://gitlab.com/furious-dragon/blender_scripts.git
+
 ## Functions of Project
 **2delete_suffix_prefix:**
 * delete_object_prefix() - Delete selected object name prefix.
