@@ -9,19 +9,37 @@ import re
 #import bpy
 
 
-import blender_scripts.src.general as general
+import blender_scripts.external.python_library.src.general as general
 import blender_scripts.src.blender.get_object as get_object
+import blender_scripts.src.blender.base.shader_node as shader_node
 import blender_scripts.external.python_library.src.prefix_suffix as prefix_suffix
+import blender_scripts.src.unreal.texture as texture
+import blender_scripts.src.blender.base.image as image
+import blender_scripts.src.unreal.naming_convention as convention
 
 import importlib
 importlib.reload(general)
 importlib.reload(get_object)
+importlib.reload(shader_node)
 importlib.reload(prefix_suffix)
+importlib.reload(texture)
+importlib.reload(image)
+importlib.reload(convention)
 
 
 PREFIX_SUFFIX_SEPARATOR = '_'
 TEXTURE_PREFIX = 'T_'
 MATERIAL_PREFIX = 'M_'
+NO_TEXTURE_TYPE = 'None'
+
+
+## Finds if texture name with/without extension has texture prefix T_
+def has_texture_name_correct_prefix(texture_file_name):
+    if (general.is_not_none_or_empty(texture_file_name) and len(texture_file_name) > len(TEXTURE_PREFIX) and
+        texture_file_name.startswith(TEXTURE_PREFIX)):
+        return True
+    else:
+        return False
 
 def add_material_prefix_to_materials(materials):
     if general.is_not_none_or_empty(materials):
@@ -45,16 +63,77 @@ def add_material_prefix_to_all():
     add_material_prefix_to_materials(materials)
 
 
-## @param texture_fullname Prefix_BaseName_Suffix.FileExtension
-def correct_texture_prefix(texture_fullname):
-    if general.is_not_none_or_empty(texture_fullname):
-        if not texture_fullname.startswith(TEXTURE_PREFIX):
-            texture_fullname = TEXTURE_PREFIX + texture_fullname
-        return texture_fullname
-
+def get_texture_prefix_no_extension(texture_name_without_extension):
+    if general.is_not_none_or_empty(texture_name_without_extension):
+        prefix = prefix_suffix.get_prefix(texture_name_without_extension)
+        if len(texture_name_without_extension) > len(prefix):
+            return prefix
     else:
-        print(correct_texture_prefix.__name__ + '(): texture_fullname must not be None or Empty')
-        return texture_fullname
+        print(get_texture_prefix_no_extension.__name__ + '() Error: texture_name_n_extension must not be Empty or None')
+    return ''
+
+def get_texture_prefix(texture_name_n_extension):
+    if general.is_not_none_or_empty(texture_name_n_extension):
+        return get_texture_prefix_no_extension(os.path.splitext()[0])
+    else:
+        print(get_texture_prefix.__name__ + '() Error: texture_name_n_extension must not be Empty or None')
+    return ''
+
+
+def get_texture_suffix_no_extension(texture_name_without_extension):
+    if general.is_not_none_or_empty(texture_name_without_extension):
+        prefix = get_texture_prefix_no_extension(texture_name_without_extension)
+        suffix = prefix_suffix.get_suffix(texture_name_without_extension)
+        if len(texture_name_without_extension) > (len(prefix) + len(suffix)):
+            return suffix
+    else:
+        print(get_texture_suffix_no_extension.__name__ + '() Error: texture_name_without_extension must not be Empty or None')
+    return ''
+
+def get_texture_suffix(texture_name_n_extension):
+    if general.is_not_none_or_empty(texture_name_n_extension):
+        return get_texture_suffix_no_extension(os.path.splitext()[0])
+    else:
+        print(get_texture_suffix.__name__ + '() Error: texture_name_n_extension must not be Empty or None')
+    return ''
+
+def get_texture_name_without_prefix_suffix(texture_name_without_extension):
+    if general.is_not_none_or_empty(texture_name_without_extension):
+        prefix = get_texture_prefix_no_extension(texture_name_without_extension)
+        suffix = prefix_suffix.get_suffix(texture_name_without_extension)
+        if len(texture_name_without_extension) > (len(prefix) + len(suffix)):
+            return texture_name_without_extension[len(prefix):-len(suffix)]
+    else:
+        print(get_texture_name_without_prefix_suffix.__name__ + '() Error: texture_name_without_extension must not be Empty or None')
+    return ''
+
+
+## @param texture_fullname Prefix_BaseName_Suffix.FileExtension
+def get_prefixed_texture_name(texture_name_n_extension):
+    if has_texture_name_correct_prefix(texture_name_n_extension):
+        return texture_name_n_extension
+    else:
+        return TEXTURE_PREFIX + texture_name_n_extension
+
+## @param texture_short_name (str) texture file name without extension
+# @return (str) shortname_with_replaced_suffix + extension
+def get_texture_shortname_with_replaced_suffix(texture_short_name, new_suffix):
+    if general.is_not_none_or_empty_lists([texture_short_name, new_suffix]):
+        suffix = get_texture_suffix_no_extension(texture_short_name)
+        return texture_short_name[:-len(suffix)] + new_suffix
+    else:
+        print(get_texture_shortname_with_replaced_suffix.__name__ + '() Error: texture_name_n_extension, new_suffix must not be Empty or None')
+        return texture_short_name
+
+## @return (str) shortname_with_replaced_suffix + extension
+def get_texture_fullname_with_replaced_suffix(texture_name_n_extension, new_suffix):
+    if general.is_not_none_or_empty_lists([texture_name_n_extension, new_suffix]):
+        texture_short_name, texture_extension = os.path.splitext(texture_name_n_extension)
+        return get_texture_shortname_with_replaced_suffix(texture_short_name, new_suffix) + texture_extension
+    else:
+        print(get_texture_fullname_with_replaced_suffix.__name__ + '() Error: texture_name_n_extension, new_suffix must not be Empty or None')
+        return texture_name_n_extension
+
 
 ## Change gltf Standard texture suffix to Custom Standard
 def correct_suffix(suffix):
@@ -70,115 +149,100 @@ def correct_suffix(suffix):
         return suffix
 
 
+## Reads prefix and suffix of texture asset and returns type of texture by convention
+# Converts all text to lower case
+def get_texture_type_by_prefix_suffix_in_shortname(texture_short_name):
+    prefix = get_texture_prefix_no_extension(texture_short_name)
+    suffix = get_texture_suffix_no_extension(texture_short_name)
 
+    texture_types = convention.TextureTypesCustom
+    texture_types_keys = list(convention.TextureTypesCustom.keys())
+    is_type_found = False
+    type_indx = 0
+    key = ''
+    while (not is_type_found) and type_indx < len(texture_types_keys):
+        key = texture_types_keys[type_indx]
+        if texture_types[key][0].casefold() == prefix.casefold():     # check prefix
+            is_suffix_found = False
+            suffix_indx = 0
+            while (not is_suffix_found) and suffix_indx < len(texture_types[key][1]):
+                if texture_types[key][1][suffix_indx].casefold() == suffix.casefold():    # check suffix in suffix list
+                    is_type_found = True
+                    is_suffix_found = True
+                else:
+                    suffix_indx +=1
+        type_indx += 1
 
+    if not is_type_found:
+        key = NO_TEXTURE_TYPE
+    return key
 
-
-'''## @return (str) name of asset without prefix and suffix, without extension.
-def get_asset_name_without_prefix_suffix(object_path):
-    if general.is_not_none_or_empty(object_path):
-        file_name_no_extension = unreal.Paths.get_base_filename(object_path)
-        file_name_no_prefix_suffix = file_name_no_extension
-        prefix = get_prefix(file_name_no_extension)
-        #unreal.log('prefix'); unreal.log(prefix)
-        if prefix in convention.get_AssetsPrefixConventionTable_prefixes():
-            file_name_no_prefix_suffix = file_name_no_prefix_suffix[len(prefix):]
-
-        suffix = get_suffix(file_name_no_extension)
-        #unreal.log('suffix'); unreal.log(suffix)
-        if suffix in convention.get_TextureTypesCustom_suffixes():
-            file_name_no_prefix_suffix = file_name_no_prefix_suffix[:-len(suffix)]
-        return file_name_no_prefix_suffix
-    else:
-        unreal.log_error(get_asset_name_without_prefix_suffix.__name__ + ': object_path must not be None or empty')
-        return ''
-
-## Correct prefix by unreal engine asset type (Texture, Material, Static Mesh).
-# Adds prefix, if there is no prefix
-def correct_prefix_by_uclass(object_path, asset_data = None,
-                          include_only_on_disk_assets = False):
-    if asset_data == None:
-        asset_data = get_asset.get_asset_data_by_object_path(object_path, include_only_on_disk_assets)
-
-    if asset_data != None:
-        asset_class = general.Name_to_str(asset_data.get_editor_property('asset_class'))
-        prefix_for_class = convention.AssetsPrefixConventionTable[asset_class]
-        #unreal.log('prefix_for_class');   unreal.log(prefix_for_class)
-        if prefix_for_class != None and prefix_for_class != '':
-            # If function was called by correct_prefix_by_uclass_dirs, it has one transaction with all assets in folder
-            with unreal.ScopedEditorTransaction(correct_prefix_by_uclass.__name__) as ue_transaction:
-                add_prefix_suffix(object_path, prefix = prefix_for_class, is_folder_operation = False,
-                                    include_only_on_disk_assets = include_only_on_disk_assets)
-
-        else:
-            unreal.log_error(correct_prefix_by_uclass.__name__ + '(): Did not find prefix for asset class - ' + asset_class)
-    else:
-        unreal.log_error(correct_prefix_by_uclass.__name__ + '(): Did not find asset_data from object_path')
-
-## Correct prefix by unreal engine asset type (Texture, Material, Static Mesh).
-# Adds prefix, if there is no prefix
-def correct_prefix_by_uclass_dirs(dir_paths, recursive = False, include_only_on_disk_assets = False):
-    with unreal.ScopedEditorTransaction(correct_prefix_by_uclass_dirs.__name__) as ue_transaction:
-        assets_data = get_asset.get_assets_by_dirs(dir_paths, recursive, include_only_on_disk_assets)
-
-        progress_bar_text = correct_prefix_by_uclass_dirs.__name__ + config.IS_WORKING_TEXT
-        with unreal.ScopedSlowTask(len(assets_data), progress_bar_text) as slow_task:
-            slow_task.make_dialog(True)
-
-            for asset_data in assets_data:
-                if slow_task.should_cancel():
-                    break
-                object_path = asset_data.get_editor_property('object_path')
-                correct_prefix_by_uclass(object_path, asset_data, include_only_on_disk_assets)
-
-                slow_task.enter_progress_frame(1)
-
-
-## Rename texture asset suffix to default variation.
+## Rename texture file name suffix to default variation.
 # Default variation is zero in list of TextureTypesCustom suffixes
 # F.e. From _BaseColor to _Diff
-def standardize_texture_suffix_asset_data(texture_asset_data):
-    if texture_asset_data is not None:
-        texture_type = get_texture_type_by_prefix_suffix_in_data(texture_asset_data)
+# @return texture_name_n_extension (str) full name with extension with standard suffix
+def get_texture_name_with_standard_suffix(texture_name_n_extension):
+    if general.is_not_none_or_empty(texture_name_n_extension):
+        texture_short_name = os.path.splitext(texture_name_n_extension)[0]
+        texture_type = get_texture_type_by_prefix_suffix_in_shortname(texture_short_name)
         if texture_type != NO_TEXTURE_TYPE:
-            texture_name_no_extension = get_asset.get_asset_name_no_extension_in_data_asset(texture_asset_data)
-            prefix, suffix = get_asset_prefix_suffix_by_name(texture_name_no_extension)
+            suffix = get_texture_suffix_no_extension(texture_short_name)
             standard_suffix = convention.get_TextureTypesCustom_standard_suffix(texture_type)
             if suffix != standard_suffix:
-                replace_prefix_suffix_asset_data(texture_asset_data, prefix = '', suffix = suffix,
-                                                 new_prefix = '', new_suffix = standard_suffix)
+                return get_texture_fullname_with_replaced_suffix(texture_name_n_extension, standard_suffix)
         else:
-            unreal.log_error(standardize_texture_suffix_asset_data.__name__ + '(): did not find texture type')
+            print(get_texture_name_with_standard_suffix.__name__ + '() Error: did not find texture type')
     else:
-        unreal.log_error(standardize_texture_suffix_asset_data.__name__ + '(): no asset_data in input')
+        print(get_texture_name_with_standard_suffix.__name__ + '() Error: texture_name_n_extension must not be Empty or None')
 
-## Rename texture asset suffix to default variation.
-# Default variation is zero in list of TextureTypesCustom suffixes
-# F.e. From _BaseColor to _Diff
-def standardize_texture_suffix_materials(materials):
-    if general.is_not_none_or_empty(textures_assets_data):
-        progress_bar_text = standardize_texture_suffix_assets_data.__name__ + config.IS_WORKING_TEXT
-        with unreal.ScopedSlowTask(len(textures_assets_data), progress_bar_text) as slow_task:
-            slow_task.make_dialog(True)
+    return texture_name_n_extension
 
-            for asset_data in textures_assets_data:
-                if slow_task.should_cancel():
-                    break
-                standardize_texture_suffix_asset_data(asset_data)
+## If texture node has no prefix, add prefix T_.
+# Standardize texture suffix to default 0 element in TextureTypesCustom suffixes
+# Rename and Reload texture image file in node.
+# Each texture_nodes list in texture_nodes_packs is associated with material in materials
+# @texture_nodes_packs (shader_node) list of lists of shader nodes with texture image
+def correct_n_standardize_texture_nodes_prefix_suffix_in_materials(materials, texture_nodes_packs):
+    if general.is_not_none_or_empty_lists([materials, texture_nodes_packs]):
+        if general.are_lists_equal_length([materials, texture_nodes_packs]):
+            for i in range(len(materials)):
+                material = materials[i]
+                for texture_node in texture_nodes_packs[i]:
+                    original_texture_name_n_extension = image.get_texture_node_file_name_n_extension(texture_node)
+                    correct_texture_name_n_extension = get_prefixed_texture_name(original_texture_name_n_extension)
+                    correct_texture_name_n_extension = get_texture_name_with_standard_suffix(correct_texture_name_n_extension)
 
-                slow_task.enter_progress_frame(1)
+                    texture.rename_n_reload_texture_in_node_in_same_dir(material, texture_node, correct_texture_name_n_extension)
+                    print (original_texture_name_n_extension + ' -> ' + correct_texture_name_n_extension)
+
+        else:
+            print(correct_n_standardize_texture_nodes_prefix_suffix_in_materials.__name__ +
+              '() Error: materials and texture_nodes_packs must be equal length')
     else:
-        unreal.log(standardize_texture_suffix_assets_data.__name__ + '(): no assets_data in input')
+        print(correct_n_standardize_texture_nodes_prefix_suffix_in_materials.__name__ +
+              '() Error: materials and texture_nodes_packs must not be None or Empty')
 
-## Rename texture asset suffix to default variation.
-# Default variation is zero in list of TextureTypesCustom suffixes
-# F.e. From _BaseColor to _Diff
-def standardize_texture_suffix_dirs(dir_paths, recursive = False, include_only_on_disk_assets = False):
-     with unreal.ScopedEditorTransaction(correct_prefix_by_uclass_dirs.__name__) as ue_transaction:
-        assets_data = get_asset.get_textures_data_by_dirs(dir_paths, recursive, include_only_on_disk_assets)
-        standardize_texture_suffix_assets_data(assets_data)
+## If texture node has no prefix, add prefix T_.
+# Standardize texture suffix to default 0 element in TextureTypesCustom suffixes
+# Rename and Reload texture image file in node.
+# Each texture_nodes list in texture_nodes_packs is associated with material in materials
+# @texture_nodes_pack (shader_node) list of shader nodes with texture image
+def correct_n_standardize_texture_nodes_prefix_suffix_in_material(material, texture_nodes_pack):
+    correct_n_standardize_texture_nodes_prefix_suffix_in_materials([material], [texture_nodes_pack])
 
-def correct_n_standardize_texture_suffix_dirs(dir_paths, recursive = False, include_only_on_disk_assets = False):
-    correct_prefix_by_uclass_dirs(dir_paths, recursive, include_only_on_disk_assets)
-    standardize_texture_suffix_dirs(dir_paths, recursive, include_only_on_disk_assets)
-'''
+## If texture node has no prefix, add prefix T_.
+# Standardize texture suffix to default 0 element in TextureTypesCustom suffixes
+# Rename and Reload texture image file in node.
+# Each texture_nodes list in texture_nodes_packs is associated with material in materials
+# @texture_nodes_pack (shader_node) list of shader nodes with texture image
+# TODO: Needs to be tested
+def correct_n_standardize_texture_nodes_prefix_suffix_in_selected_materials():
+    selected_materials = get_object.get_selected_materials()
+    if general.is_not_none_or_empty(selected_materials):
+        texture_nodes_packs = []
+        for material in selected_materials:
+            texture_nodes_packs.append(shader_node.get_shader_nodes_texture_image_in_material(material))
+
+        correct_n_standardize_texture_nodes_prefix_suffix_in_materials(selected_materials, texture_nodes_packs)
+    else:
+        print(correct_n_standardize_texture_nodes_prefix_suffix_in_selected_materials.__name__ + '() Info: no materials are selected')

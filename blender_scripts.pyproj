@@ -52,13 +52,14 @@
     <Compile Include="tasks\2delete_suffix_prefix.py" />
     <Compile Include="tasks\3resave_textures.py" />
     <Compile Include="tasks\add_gltf_occlusion_node.py" />
+    <Compile Include="tasks\correct_n_standardize_texture_nodes_prefix_suffix.py" />
     <Compile Include="tasks\rename_material_by_object_names_task.py" />
     <Compile Include="tasks\rename_to_named_list.py" />
     <Compile Include="tasks\backface_culling.py" />
     <Compile Include="src\config.py" />
     <Compile Include="tasks\create_lods.py" />
     <Compile Include="src\blender\scale_material.py" />
-    <Compile Include="src\general.py" />
+    <Compile Include="src\general_bpy.py" />
     <Compile Include="tasks\export_to_unreal.py" />
     <Compile Include="tasks\inline.py" />
     <Compile Include="src\blender\base\material.py" />

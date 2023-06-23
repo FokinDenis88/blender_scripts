@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(PARENT_DIR))
 
 import bpy
 
-import blender_scripts.src.general as general
+import blender_scripts.external.python_library.src.general as general
 import blender_scripts.src.blender.get_object as get_object
 #import blender_scripts.external.python_library.src.prefix_suffix as prefix_suffix
 
@@ -199,14 +199,17 @@ def get_shader_nodes_by_types_in_materials(materials, shader_nodes_types):
 
     return found_nodes
 
+
 def get_shader_nodes_by_type_in_materials(materials, shader_nodes_type):
     return get_shader_nodes_by_types_in_materials(materials, [shader_nodes_type])
 def get_shader_nodes_by_types_in_material(material, shader_nodes_types):
     return get_shader_nodes_by_types_in_materials([material], shader_nodes_types)
+def get_shader_nodes_by_type_in_materials(materials, shader_nodes_type):
+    return get_shader_nodes_by_types_in_materials(materials, [shader_nodes_type])
 def get_shader_nodes_by_type_in_material(material, shader_nodes_type):
     return get_shader_nodes_by_types_in_materials([material], [shader_nodes_type])
 
-## Get nodes by type ShaderNodeTexImage
+## Get nodes by type ShaderNodeTexImage. Shader nodes with textures inside
 def get_shader_nodes_texture_image_in_material(material):
     return get_shader_nodes_by_type_in_material(material, bpy.types.ShaderNodeTexImage)
 def get_shader_nodes_texture_image_in_materials(materials):
@@ -219,19 +222,17 @@ def get_all_shader_nodes_bsdf_principled_in_materials(materials):
     return get_shader_nodes_by_type_in_materials(materials, bpy.types.ShaderNodeBsdfPrincipled)
 def get_shader_node_bsdf_principled_in_material(material):
     return get_all_shader_nodes_bsdf_principled_in_material(material)[0]
-def get_shader_node_bsdf_principled_in_materials(materials):
-    return get_all_shader_nodes_bsdf_principled_in_materials(materials)
 
-def get_all_shader_node_material_output_in_material(material):
+def get_all_shader_nodes_material_output_in_material(material):
     return get_shader_nodes_by_type_in_material(material, bpy.types.ShaderNodeOutputMaterial)
-def get_all_shader_node_material_output_in_materials(materials):
+def get_all_shader_nodes_material_output_in_materials(materials):
     return get_shader_nodes_by_type_in_materials(materials, bpy.types.ShaderNodeOutputMaterial)
 def get_shader_node_material_output_in_material(material):
     return get_shader_nodes_by_type_in_material(material, bpy.types.ShaderNodeOutputMaterial)[0]
 
-def get_all_shader_node_material_output_in_material(material):
+def get_all_shader_node_group_in_material(material):
     return get_shader_nodes_by_type_in_material(material, bpy.types.ShaderNodeGroup)
-def get_all_shader_node_material_output_in_materials(materials):
+def get_all_shader_node_group_in_materials(materials):
     return get_shader_nodes_by_type_in_materials(materials, bpy.types.ShaderNodeGroup)
 
 

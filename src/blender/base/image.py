@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(PARENT_DIR))
 
 import bpy
 
-import blender_scripts.src.general as general
+import blender_scripts.external.python_library.src.general as general
 import blender_scripts.src.blender.path_blender as path_blender
 
 import importlib
@@ -88,9 +88,27 @@ def get_packed_image_absolute_path(image):
         print(get_packed_image_absolute_path.__name__ + '(): image must not be None')
         return
 
+## @return file_name (str) file name and extension without path. F.e. image_name.png
 def get_image_file_name_n_extension(image):
-    path = get_packed_image_absolute_path(image)
-    return os.path.basename(os.path.abspath(path))
+    if image is not None:
+        path = get_packed_image_absolute_path(image)
+        return os.path.basename(os.path.abspath(path))
+    else:
+        return ''
+
+def get_texture_node_file_name_n_extension(texture_node):
+    if texture_node is not None:
+        return get_image_file_name_n_extension(texture_node.image)
+    else:
+        return ''
+
+## @return (str) absolute path of image of shader node
+def get_image_in_node_abs_path(texture_node):
+    if texture_node is not None:
+        return get_packed_image_absolute_path(texture_node.image)
+    else:
+        return ''
+
 
 ## Loads image to all blender data
 def load_image(image_file_path):

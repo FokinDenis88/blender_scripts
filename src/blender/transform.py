@@ -9,7 +9,7 @@ import math
 import bpy
 import mathutils
 
-import blender_scripts.src.general as general
+import blender_scripts.external.python_library.src.general as general
 import blender_scripts.src.blender.select as select
 import blender_scripts.src.blender.get_object as get_object
 import blender_scripts.src.blender.base.mesh as mesh
