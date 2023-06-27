@@ -2,7 +2,8 @@
 Use scripts for preparing asset for import to Unreal Engine
 
 ## Installation
-git clone --recurse-submodules https://gitlab.com/furious-dragon/blender_scripts.git
+1) git clone --recurse-submodules https://gitlab.com/furious-dragon/blender_scripts.git
+2) BLENDER_SCRIPTS_DIR_PATH change path to absolute path to folder on computer. F.e. 'C:/blender_scripts'
 
 ## Functions of Project
 **2delete_suffix_prefix:**
