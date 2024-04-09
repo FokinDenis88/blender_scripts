@@ -6,36 +6,36 @@ Use scripts for preparing asset for import to Unreal Engine
 2) BLENDER_SCRIPTS_DIR_PATH change path to absolute path to folder on computer. F.e. 'C:/blender_scripts'
 
 ## Functions of Project
-**2delete_suffix_prefix:**
+**[2delete_suffix_prefix()](/tasks/2delete_suffix_prefix.py):**
 * delete_object_prefix() - Delete selected object name prefix.
 * delete_object_suffix() - Delete selected object name suffix.
 
-**3resave_textures:**
+**[3resave_textures](/tasks/3resave_textures.py):**
 * pack_all_images ()		- Packs all images in data.
 * unpack_all_images()		- Unpacks all images in data.
 * resave_textures()		    - Resaves textures with conventional names. Base name depends on material name
 * setup_node_color_space() - Corrects color space for node. 
 
-**admin_tasks:**
+**[admin_tasks](/tasks/admin_tasks.py):**
 * rename_to_named_list() - Rename objects to standard: base_name + separator + index. 
 
-**backface_culling:**
+**[backface_culling](/tasks/backface_culling.py):**
 * set_backface_culling() - Set backface_culling value to materials of selected objects.
 
-**create_lods:**
+**[create_lods](/tasks/create_lods.py):**
 * create_lods() - Create ready for export to Unreal Engine Lods from Model Main Function
 
-**inline:**
+**[inline](/tasks/inline.py):**
 * relocate_to_interval() - Move multiple objects by rows and columns in form of table or line. 
 
-**set_material_prefix:**
+**[set_material_prefix](/tasks/set_material_prefix.py):**
 * capitalize_all_material_names() - Make first char in name of material upper case to all materials in data. 
 * set_prefix_to_all_materials()	- Add M_ prefix to all materials in data. 
 
-**standardize_names:**
+**[standardize_names](/tasks/standardize_names.py):**
 * standardize_selected_names() - Capitalize, upper_camel_case, delete_space in names of selected objects. 
 
-**to_floor:**
+**[to_floor](/tasks/to_floor.py):**
 * to_floor_plane_selected() - Move all selected objects to xy floor plane. 
 
 ## Support
