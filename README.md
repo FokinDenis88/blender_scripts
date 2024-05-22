@@ -1,6 +1,11 @@
 # Blender Scripts for Game Development Unreal Engine
 Use scripts for preparing asset for import to Unreal Engine
 
+## Repository Web Pages
+[github](https://github.com/FokinDenis88/blender_scripts)  
+[gitlab (main)](https://gitlab.com/furious-dragon/blender_scripts)  
+[gitverse (Russia)](https://gitverse.ru/FokinDenis88/blender_scripts)
+
 ## Installation
 1) git clone --branch develop --recurse-submodules https://gitlab.com/furious-dragon/blender_scripts.git
 2) BLENDER_SCRIPTS_DIR_PATH change path to absolute path to folder on computer. F.e. 'C:/blender_scripts'
@@ -37,6 +42,14 @@ Use scripts for preparing asset for import to Unreal Engine
 
 **[to_floor](/tasks/to_floor.py):**
 * to_floor_plane_selected() - Move all selected objects to xy floor plane. 
+
+## Contact
+**Skype:** live:dragon8806  
+**Telegram:** https://t.me/Furious_Dragon_88  
+**VK (Russia):** https://vk.com/furious__dragon  
+**Discord:** ***ID:*** fokin_denis_yurievich_  ***User Name:*** fokin_denis_yurievich_  
+**Email:** fokin-denis-88-code@ya.ru  
+**Gitter:** @fokindenis88_gitlab:gitter.im
 
 ## Support
 ### Bitcoin and other cryptocurrency:  
